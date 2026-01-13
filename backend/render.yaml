@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: sileme-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGODB_URI
+        sync: false  # 需要手动在Render控制台设置
+      - key: FRONTEND_URL
+        sync: false  # 需要手动在Render控制台设置
