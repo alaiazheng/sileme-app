@@ -116,6 +116,28 @@ app.get('/api/health', (req, res) => {
   })
 })
 
+// 数据库测试接口
+app.get('/api/test-db', async (req, res) => {
+  try {
+    const User = (await import('./models/User.js')).default
+    const userCount = await User.countDocuments()
+    res.json({
+      success: true,
+      message: '数据库连接正常',
+      data: {
+        userCount,
+        dbType: process.env.USE_MEMORY_DB === 'true' ? 'memory' : 'mongodb'
+      }
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: '数据库连接失败',
+      error: error.message
+    })
+  }
+})
+
 // API文档
 app.get('/api/docs', (req, res) => {
   res.json({
