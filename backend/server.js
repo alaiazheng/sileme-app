@@ -27,6 +27,14 @@ dotenv.config()
 // 连接数据库
 connectDB()
 
+// CORS配置 - 需要在创建服务器之前定义
+const allowedOrigins = process.env.NODE_ENV === 'production' 
+  ? [
+      process.env.FRONTEND_URL || 'https://sileme-web.onrender.com',
+      'https://sileme-web.onrender.com'
+    ]
+  : ['http://localhost:3001', 'http://localhost:3000']
+
 const app = express()
 const server = createServer(app)
 const io = new Server(server, {
@@ -43,14 +51,6 @@ const notificationService = new NotificationService(io)
 app.use(helmet())
 app.use(compression())
 app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } }))
-
-// CORS配置
-const allowedOrigins = process.env.NODE_ENV === 'production' 
-  ? [
-      process.env.FRONTEND_URL || 'https://sileme-web.onrender.com',
-      'https://sileme-web.onrender.com'
-    ]
-  : ['http://localhost:3001', 'http://localhost:3000']
 
 app.use(cors({
   origin: allowedOrigins,
