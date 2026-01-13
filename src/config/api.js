@@ -2,7 +2,7 @@
 const getApiBaseUrl = () => {
   // 生产环境使用环境变量或默认值
   if (import.meta.env.PROD) {
-    return import.meta.env.VITE_API_URL || 'https://sileme-backend.onrender.com/api'
+    return import.meta.env.VITE_API_URL || 'https://sileme-app.onrender.com/api'
   }
   // 开发环境使用本地地址
   return import.meta.env.VITE_API_URL || 'http://localhost:5001/api'
