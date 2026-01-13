@@ -52,10 +52,7 @@ app.use(helmet())
 app.use(compression())
 app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } }))
 
-// 在生产环境中信任代理服务器
-if (process.env.NODE_ENV === 'production') {
-  app.set('trust proxy', 1)
-}
+app.set('trust proxy', 1)
 
 app.use(cors({
   origin: allowedOrigins,
